@@ -15,8 +15,16 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('order-progress', require('./components/OrderProgress.vue'));
+Vue.component('order-alert', require('./components/OrderAlert.vue'));
+Vue.component('order-notifications', require('./components/OrderNotifications.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    mounted() {
+        Echo.channel('pizza-tracker')
+            .listen('OrderStatusChanged', (e) => {
+               console.log('Tracker Is Working ', e);
+            });
+    }
 });
